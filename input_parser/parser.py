@@ -15,9 +15,11 @@ class Parser():
         with open(file_path, 'r') as file:
             data = file.readline()
             
+            if data.split().__len__() != 5:
+                raise ValueError("Invalid input file")
+            
             WIDTH = int(data.split()[0])
             HEIGHT = int(data.split()[1])
-                        
             GP = int(data.split()[2])
             SP = int(data.split()[3])
             NT = int(data.split()[4])
@@ -50,9 +52,19 @@ class Parser():
                 file.write(json.dumps(json_obj, indent=4))
             
             return json_obj
-                
+          
+          
+    @staticmethod      
+    def generate_output(json_file):
+        with open(json_file, 'r') as file:
+            data = json.load(file)
             
-                
+            with open("output_file.txt", 'w') as f:
+                for movement in data['movements']:
+                    f.write(f"{movement['tile_num']} {movement['x']} {movement['y']}\n")
+
+                     
+
             
             
             
